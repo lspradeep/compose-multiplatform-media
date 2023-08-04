@@ -28,21 +28,21 @@ actual class UIComponentButton actual constructor(val onClick: () -> Unit) {
             uiButton = withContext(Dispatchers.Main) {
                 UIButton.buttonWithType(buttonType = UIButtonTypeSystem).apply {
                     setTitle(title = text, forState = UIControlStateNormal)
-                    addTarget(
-                        target = object : NSObject(), UIGestureRecognizerDelegateProtocol {
-                            override fun gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer): Boolean {
-                                onClick()
-                                return true
-                            }
-                        },
-                        action = NSSelectorFromString("onClickInternal"),
-                        forControlEvents = UIControlEventTouchUpInside
-                    )
 //                    addTarget(
-//                        this,
-//                        NSSelectorFromString("onClickInternal"),
-//                        UIControlEventTouchUpInside
+//                        target = object : NSObject(), UIGestureRecognizerDelegateProtocol {
+//                            override fun gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer): Boolean {
+//                                onClick()
+//                                return true
+//                            }
+//                        },
+//                        action = NSSelectorFromString("onClickInternal"),
+//                        forControlEvents = UIControlEventTouchUpInside
 //                    )
+                    addTarget(
+                        this,
+                        NSSelectorFromString("onClickInternal"),
+                        UIControlEventTouchUpInside
+                    )
                 }
             }
         }

@@ -1,4 +1,4 @@
-rootProject.name = "MyApplication"
+rootProject.name = "Compose Multiplatform Media"
 
 include(":androidApp")
 include(":shared")

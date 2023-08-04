@@ -1,14 +1,12 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -39,6 +37,7 @@ fun App() {
         var image by remember { mutableStateOf<ImageBitmap?>(null) }
         var showWebView by remember { mutableStateOf(false) }
         var showPdfInWebView by remember { mutableStateOf(false) }
+        val lazyListState = rememberLazyListState()
 
         LaunchedEffect(tts) {
             if (tts) {
@@ -48,7 +47,7 @@ fun App() {
 
         LaunchedEffect(Unit) {
             image = urlToBitmap(
-                "https://image.pitchbook.com/WevrNAvMz4QxF1Ua1HVLjRiP1fV1676357410021_200x200"
+                "https://mathiasfrohlich.gallerycdn.vsassets.io/extensions/mathiasfrohlich/kotlin/1.7.1/1581441165235/Microsoft.VisualStudio.Services.Icons.Default"
             )
         }
 
@@ -66,10 +65,11 @@ fun App() {
                 })
         } else {
             LazyColumn(
-                Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp),
-                contentPadding = PaddingValues(15.dp)
+                contentPadding = PaddingValues(15.dp),
+                state = lazyListState
             ) {
 
                 item {
@@ -117,7 +117,7 @@ fun App() {
 
                     UIComponentText(
                         modifier = Modifier.width(120.dp).height(50.dp),
-                        text = "hello world"
+                        text = "hello world!"
                     )
 
                     Divider()
