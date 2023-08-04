@@ -13,6 +13,12 @@ The result will be a [Kotlin Multiplatform](https://kotlinlang.org/docs/multipla
 
 ![](readme_images/banner.png)
 
+<p float="top">
+   <img src="readme_images/ss1.png" width="35%">
+
+   <img src="readme_images/ss2.png" width="35%">
+</p>
+
 If you want to create an application targeting desktop platforms – Windows, macOS, or Linux –
 use the [Compose Multiplatform desktop application template](https://github.com/JetBrains/compose-multiplatform-desktop-template#readme).
 
