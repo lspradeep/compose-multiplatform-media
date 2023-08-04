@@ -11,8 +11,6 @@ You can use this template to start developing your own [Compose Multiplatform](h
 Follow our tutorial below to get your first Compose Multiplatform app up and running.
 The result will be a [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) project that uses the Compose Multiplatform UI framework.
 
-![](readme_images/banner.png)
-
 <p float="top">
    <img src="readme_images/ss1.png" width="35%">
 
