@@ -35,6 +35,7 @@ import platform.UIKit.UIButtonTypeSystem
 import platform.UIKit.UIControlEventTouchUpInside
 import platform.UIKit.UIControlStateNormal
 import platform.UIKit.UILabel
+import platform.UIKit.UIView
 import platform.WebKit.WKWebView
 import platform.WebKit.WKWebViewConfiguration
 
@@ -58,18 +59,17 @@ actual fun MapView(modifier: Modifier, latLong: LatLong) {
         }
 
         mkMapView = withContext(Dispatchers.Main) {
-            MKMapView()
+            MKMapView().apply {
+                addAnnotation(annotation = mkPointAnnotation!!)
+            }
         }
-
     }
 
     if (mkMapView != null && mkPointAnnotation != null) {
         UIKitView(
             modifier = modifier,
             factory = {
-                mkMapView!!.apply {
-                    addAnnotation(annotation = mkPointAnnotation!!)
-                }
+                mkMapView!!
             }
         )
     }
@@ -114,12 +114,20 @@ actual fun UIComponentButton(modifier: Modifier, text: String, onClick: () -> Un
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun UIComponentText(modifier: Modifier, text: String) {
-    UIKitView(modifier = modifier,
-        factory = {
-            val uiLabel = UILabel()
-            uiLabel.setText(text = text)
-            uiLabel
-        })
+    var uiLabel by remember { mutableStateOf<UILabel?>(null) }
+
+    LaunchedEffect(Unit) {
+        uiLabel = UILabel().apply {
+            setText(text = text)
+        }
+    }
+
+    if (uiLabel != null) {
+        UIKitView(modifier = modifier,
+            factory = {
+                uiLabel!!
+            })
+    }
 }
 
 actual suspend fun textToSpeech(text: String) {
@@ -160,6 +168,7 @@ actual suspend fun urlToBitmap(url: String): ImageBitmap {
 actual fun MediaPlayerUI(modifier: Modifier, url: String) {
     var avPlayer by remember { mutableStateOf<AVPlayer?>(null) }
     var avPlayerViewController by remember { mutableStateOf<AVPlayerViewController?>(null) }
+    var uiView by remember { mutableStateOf<UIView?>(null) }
 
     LaunchedEffect(Unit) {
         avPlayer = withContext(Dispatchers.Main) {
@@ -175,13 +184,16 @@ actual fun MediaPlayerUI(modifier: Modifier, url: String) {
                 contentOverlayView?.autoresizesSubviews = true
             }
         }
+        uiView = withContext(Dispatchers.Main) {
+            avPlayerViewController?.view
+        }
     }
 
-    if (avPlayer != null && avPlayerViewController != null) {
+    if (avPlayer != null && uiView != null) {
         UIKitView(
             modifier = modifier,
             factory = {
-                avPlayerViewController?.view!!
+                uiView!!
             },
             interactive = true,
             background = Color.Gray
